@@ -1,0 +1,54 @@
+version: '3'
+services:
+  mediawiki:
+    build: ./mediawiki-docker
+    restart: unless-stopped
+    ports: []
+      # - 8080:80
+    links:
+      - database
+      - elasticsearch
+      # - parsoid
+    volumes:
+      - ./data/mediawiki/images:/var/www/html/images
+      - ./resources/mediawiki:/var/www/html/resources/external:ro
+      - ./config/mediawiki/BaseCustomSettings.php:/var/www/html/BaseCustomSettings.php:ro
+      # After initial setup, download LocalSettings.php to the same directory as
+      # this yaml and uncomment the following line and use compose to restart
+      # the mediawiki service
+      - ./config/mediawiki/LocalSettings.php:/var/www/html/LocalSettings.php:ro
+    environment: {}
+    extra_hosts: {}
+  database:
+    image: mariadb
+    restart: unless-stopped
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    environment:
+      # @see https://phabricator.wikimedia.org/source/mediawiki/browse/master/includes/DefaultSettings.php
+      MYSQL_DATABASE: my_wiki
+      MYSQL_USER: wikiuser
+      MYSQL_PASSWORD: wikipass
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.16
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+  cloudflared:
+    image: cloudflare/cloudflared:2021.6.0
+    restart: unless-stopped
+    command:
+      - tunnel
+      # - "--loglevel=debug"
+      - run
+    links:
+      - mediawiki
+    volumes:
+      - ./config/cloudflared:/home/nonroot/.cloudflared
+  # parsoid:
+  #   image: thenets/parsoid:0.11
+  #   environment:
+  #     PARSOID_DOMAIN_parsoid: http://mediawiki/api.php
