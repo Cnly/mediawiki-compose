@@ -9,6 +9,8 @@
 
 $wgInternalServer = "http://localhost";
 
+$wgArticlePath = "/wiki/$1";
+
 $wgMaxUploadSize = 100 * 1024 * 1024;
 
 $wgLogos = [ '1x' => "$wgResourceBasePath/resources/external/MediaWiki-2020-icon.svg" ];

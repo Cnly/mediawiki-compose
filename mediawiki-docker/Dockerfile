@@ -7,6 +7,12 @@ RUN { \
 		echo 'post_max_size = 100M'; \
 	} > $PHP_INI_DIR/conf.d/mediawiki.ini
 
+# https://www.mediawiki.org/wiki/Manual:Short_URL/Apache
+# Note that the default $wgScriptPath seems to be ''
+RUN sed -i -E 's|(</VirtualHost>)|	RewriteEngine On\n\1|' "$APACHE_CONFDIR/sites-available/000-default.conf"
+RUN sed -i -E 's|(</VirtualHost>)|	RewriteRule ^/?wiki(/.*)?$ %{DOCUMENT_ROOT}/index.php [L]\n\1|' "$APACHE_CONFDIR/sites-available/000-default.conf"
+RUN sed -i -E 's|(</VirtualHost>)|	RewriteRule ^/*$ %{DOCUMENT_ROOT}/index.php [L]\n\1|' "$APACHE_CONFDIR/sites-available/000-default.conf"
+
 ARG MWEXTBRANCH=REL1_36
 
 RUN git clone --depth 1 \
