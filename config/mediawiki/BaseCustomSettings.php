@@ -58,3 +58,5 @@ wfLoadExtension( 'CodeMirror' );
 $wgDefaultUserOptions['usecodemirror'] = 1;
 
 wfLoadExtension( 'CodeEditor' );
+
+wfLoadExtension( 'CategoryTree' );
