@@ -135,3 +135,33 @@ docker run -it --rm -v `pwd`/config/cloudflared:/home/nonroot/.cloudflared cloud
 ## Done!
 
 Now you should have a working MediaWiki instance.
+
+
+
+# Appendices
+
+## Configuring the Amount of RAM used by Elasticsearch
+
+This can be done in `docker-compose.override.yml`:
+
+```yaml
+services:
+  elasticsearch:
+    environment:
+      ES_JAVA_OPTS: "-Xmx512m -Xms512m"
+```
+
+
+
+## Running Cloudflared without `cert.pem`
+
+This is possible according to the [docs](https://blog.cloudflare.com/argo-tunnels-that-live-forever/#3-configure-tunnel-details). Just delete that file and specify the tunnel to run using UUID in `docker-compose.override.yml`:
+
+```yaml
+services:
+  cloudflared:
+    command:
+      - tunnel
+      - run
+      - <UUID>
+```
