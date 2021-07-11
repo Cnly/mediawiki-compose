@@ -37,6 +37,8 @@ services:
       discovery.type: single-node
     volumes:
       - ./data/elasticsearch:/usr/share/elasticsearch/data
+      # Note: Following not supported until 7
+      # - ./config/elasticsearch/jvm.options.d:/usr/share/elasticsearch/config/jvm.options.d:ro
   cloudflared:
     image: cloudflare/cloudflared:2021.6.0
     restart: unless-stopped
