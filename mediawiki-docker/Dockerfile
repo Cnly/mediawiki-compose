@@ -15,6 +15,12 @@ RUN sed -i -E 's|(</VirtualHost>)|	RewriteRule ^/*$ %{DOCUMENT_ROOT}/index.php [
 
 ARG MWEXTBRANCH=REL1_36
 
+COPY *.sh /
+
+RUN apt update && apt install -y unzip
+RUN /composer-install.sh
+RUN mv composer.phar /usr/local/bin/composer
+
 RUN git clone --depth 1 \
 	https://github.com/StarCitizenTools/mediawiki-skins-Citizen \
 	skins/Citizen
@@ -23,43 +29,25 @@ RUN git clone --depth 1 \
 	https://github.com/jmnote/SimpleMathJax \
 	extensions/SimpleMathJax
 
-# TODO: Installing Elastica from git requires additional actions (composer)
-# RUN git clone --depth 1 --single-branch --branch $MWEXTBRANCH \
-# 	https://github.com/wikimedia/mediawiki-extensions-Elastica \
-# 	extensions/Elastica
+RUN /simple-install-mw-extension.sh Elastica
+RUN cd extensions/Elastica && composer install --no-dev
 
-RUN curl -o exttmp.tar.gz -L \
-		https://extdist.wmflabs.org/dist/extensions/Elastica-REL1_36-9f6e66a.tar.gz && \
-	tar -xzf exttmp.tar.gz -C extensions && \
-	rm exttmp.tar.gz
+RUN /simple-install-mw-extension.sh CirrusSearch
 
-RUN env MWEXTNAME=CirrusSearch \
-	sh -c 'git clone --depth 1 --single-branch --branch $MWEXTBRANCH \
-		https://github.com/wikimedia/mediawiki-extensions-$MWEXTNAME \
-		extensions/$MWEXTNAME'
+RUN /simple-install-mw-extension.sh AdvancedSearch
 
-RUN env MWEXTNAME=AdvancedSearch \
-	sh -c 'git clone --depth 1 --single-branch --branch $MWEXTBRANCH \
-		https://github.com/wikimedia/mediawiki-extensions-$MWEXTNAME \
-		extensions/$MWEXTNAME'
+RUN /simple-install-mw-extension.sh intersection
 
-RUN env MWEXTNAME=intersection \
-	sh -c 'git clone --depth 1 --single-branch --branch $MWEXTBRANCH \
-		https://github.com/wikimedia/mediawiki-extensions-$MWEXTNAME \
-		extensions/$MWEXTNAME'
+RUN /simple-install-mw-extension.sh NewestPages
 
-RUN env MWEXTNAME=NewestPages \
-	sh -c 'git clone --depth 1 --single-branch --branch $MWEXTBRANCH \
-		https://github.com/wikimedia/mediawiki-extensions-$MWEXTNAME \
-		extensions/$MWEXTNAME'
+RUN /simple-install-mw-extension.sh CodeMirror
 
-RUN env MWEXTNAME=CodeMirror \
-	sh -c 'git clone --depth 1 --single-branch --branch $MWEXTBRANCH \
-		https://github.com/wikimedia/mediawiki-extensions-$MWEXTNAME \
-		extensions/$MWEXTNAME'
+# TODO: DynamicSidebar: Not supported by Citizen?
 
-# TODO: Not supported by Citizen?
-# RUN env MWEXTNAME=DynamicSidebar \
-# 	sh -c 'git clone --depth 1 --single-branch --branch $MWEXTBRANCH \
-# 		https://github.com/wikimedia/mediawiki-extensions-$MWEXTNAME \
-# 		extensions/$MWEXTNAME'
+RUN /simple-install-mw-extension.sh Echo
+
+RUN /simple-install-mw-extension.sh Flow
+RUN cd extensions/Flow && composer update --no-dev
+
+RUN /simple-install-mw-extension.sh Linter
+RUN /simple-install-mw-extension.sh DiscussionTools

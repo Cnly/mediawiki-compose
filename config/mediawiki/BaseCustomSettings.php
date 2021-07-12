@@ -60,3 +60,13 @@ $wgDefaultUserOptions['usecodemirror'] = 1;
 wfLoadExtension( 'CodeEditor' );
 
 wfLoadExtension( 'CategoryTree' );
+
+wfLoadExtension( 'Echo' );  # Requires database changes
+wfLoadExtension( 'ParserFunctions' );
+wfLoadExtension( 'Flow' );  # Requires database changes
+$wgNamespaceContentModels[NS_TALK] = 'flow-board';
+$wgNamespaceContentModels[NS_USER_TALK] = 'flow-board';
+
+wfLoadExtension( 'Linter' );  # Requires database changes
+wfLoadExtension( 'DiscussionTools' );  # Requires database changes
+$wgFragmentMode = [ 'html5' ];
