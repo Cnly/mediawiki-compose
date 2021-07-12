@@ -50,6 +50,8 @@ wfLoadExtension( 'InputBox' );
 
 wfLoadExtension( 'VisualEditor' );
 $wgVisualEditorEnableDiffPage = true;
+$wgVisualEditorEnableWikitext = true;
+$wgDefaultUserOptions['visualeditor-newwikitext'] = 1;
 
 wfLoadExtension( 'WikiEditor' );
 $wgDefaultUserOptions['usebetatoolbar'] = 1;  # For CodeEditor
