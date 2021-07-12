@@ -66,7 +66,11 @@ We start all of them instead of just MediaWiki since this action will also creat
 
 ## *2.* Adjusting Configuration
 
-Open `LocalSettings.php`. **Edit** the value of `$wgServer` so it’s protocol-relative (should then look something like `//your.domain.tld` where `your.domain.tld` is the domain of your wiki instance). This makes it easier for an HTTPS reverse proxy (e.g. Cloudflared) to work. Also, **append** this line at the end so config options provided by this repo are loaded:
+**Open** `LocalSettings.php` and do the following:
+
+* Edit the value of [`$wgServer`](https://www.mediawiki.org/wiki/Manual:$wgServer) so it’s protocol-relative (should then look something like `//your.domain.tld` where `your.domain.tld` is the domain of your wiki instance). This makes it easier for an HTTPS reverse proxy (e.g. Cloudflared) to work.
+* Add a line to define [`$wgLocaltimezone`](https://www.mediawiki.org/wiki/Manual:$wgLocaltimezone). This is required by the [DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) extension.
+* Also, append this line at the end so config options provided by this repo are loaded:
 
 ```php
 include 'BaseCustomSettings.php';
