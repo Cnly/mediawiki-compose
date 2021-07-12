@@ -19,7 +19,7 @@ The deployment process is briefly divided into a few steps:
 
 1. Run the services for the first time and configure MediaWiki.
 2. Adjust some configuration so services run as expected.
-3. Populate the search index.
+3. Initialise the database and search index.
 4. Configure Cloudflared (Optional, but useful if you’re deploying on a NATed machine and wants public access, or if you’d like to utilise services like Cloudflare Access).
 
 
@@ -95,17 +95,23 @@ Finally **uncomment** the line mentioned in the first step (and **remove** the p
 
 
 
-## *3.* Populating the Search Index
+## *3.* Initialising the Database and Search Index
 
-In this step we need to initialise the Elasticserach index before it can be used by CirrusSearch. Drop into a shell in the MediaWiki container:
+**Drop** into a shell in the MediaWiki container:
 
 ```sh
 docker exec -it <wiki name>_mediawiki_1 bash
 ```
 
-Then **execute** the following commands (you may also want to take a look at the extension [manual](https://gerrit.wikimedia.org/g/mediawiki/extensions/CirrusSearch/%2B/HEAD/README)):
+Then **execute** the following commands (you may also want to take a look at the extension):
 
 ```sh
+# Update database schemes as needed by some extensions (may take a while)
+# Note: This may also be needed after certain future updates
+php maintenance/update.php --quick
+
+# Populate the Elasticsearch index as required by CirrusSearch
+# See: https://gerrit.wikimedia.org/g/mediawiki/extensions/CirrusSearch/%2B/HEAD/README
 php extensions/CirrusSearch/maintenance/UpdateSearchIndexConfig.php
 php extensions/CirrusSearch/maintenance/ForceSearchIndex.php --skipLinks --indexOnSkip
 php extensions/CirrusSearch/maintenance/ForceSearchIndex.php --skipParse
