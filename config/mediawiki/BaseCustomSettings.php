@@ -48,8 +48,8 @@ $wgScribuntoDefaultEngine = 'luastandalone';
 
 wfLoadExtension( 'InputBox' );
 
-# wfLoadExtension( 'Parsoid', 'vendor/wikimedia/parsoid/extension.json' );
 wfLoadExtension( 'VisualEditor' );
+$wgVisualEditorEnableDiffPage = true;
 
 wfLoadExtension( 'WikiEditor' );
 $wgDefaultUserOptions['usebetatoolbar'] = 1;  # For CodeEditor
