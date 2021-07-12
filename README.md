@@ -4,7 +4,7 @@ This docker-compose application is a MediaWiki instance with a reasonable set of
 
 * MediaWiki, with:
   * Default skin: Citizen
-  * Extensions: SimpleMathJax, Elastica, CirrusSearch, AdvancedSearch, SyntaxHighlight_GeSHi, intersection, NewestPages, Poem, Scribunto, InputBox, VisualEditor, WikiEditor, CodeMirror, CodeEditor, CategoryTree
+  * Extensions: SimpleMathJax, Elastica, CirrusSearch, AdvancedSearch, SyntaxHighlight_GeSHi, intersection, NewestPages, Poem, Scribunto, InputBox, VisualEditor, WikiEditor, CodeMirror, CodeEditor, CategoryTree, and [more](config/mediawiki/BaseCustomSettings.php)
   * Short URL configured as `/wiki`
   * Default maximum upload size of 100M
 * MariaDB
