@@ -40,7 +40,7 @@ services:
       # Note: Following not supported until 7
       # - ./config/elasticsearch/jvm.options.d:/usr/share/elasticsearch/config/jvm.options.d:ro
   cloudflared:
-    image: cloudflare/cloudflared:2021.6.0
+    image: cloudflare/cloudflared:2021.7.0
     restart: unless-stopped
     command:
       - tunnel
