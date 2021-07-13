@@ -23,6 +23,9 @@ docker-compose exec -T database \
 # Backup files
 nice -n 10 tar --preserve-permissions -acf "$BACKUP_TMP_DIR"/fs.tar.xz data/mediawiki
 
+# Backup config
+cp config/mediawiki/LocalSettings.php "$BACKUP_TMP_DIR"
+
 cd "$BACKUP_TMP_DIR"
 tar -acf $OUTPUT_FILE *
 rm -rf "$BACKUP_TMP_DIR"
