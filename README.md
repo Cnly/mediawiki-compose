@@ -80,7 +80,7 @@ include 'BaseCustomSettings.php';
 
 ```sh
 sudo chmod 777 config/cloudflared
-sudo chmod 777 -R data
+sudo chmod -R 777 data
 ```
 
 **Create** a file named `docker-compose.override.yml` that contains:
@@ -104,7 +104,7 @@ Finally **uncomment** the line mentioned in the first step (and **remove** the p
 **Drop** into a shell in the MediaWiki container:
 
 ```sh
-docker exec -it <wiki name>_mediawiki_1 bash
+docker-compose exec mediawiki bash
 ```
 
 Then **execute** the following commands (you may also want to take a look at the extension):
