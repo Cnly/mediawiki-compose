@@ -1,4 +1,5 @@
 /data
 /config/cloudflared
 /config/mediawiki/LocalSettings.php
+/backup
 docker-compose.override.yml
