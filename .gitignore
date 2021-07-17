@@ -2,4 +2,5 @@
 /config/cloudflared
 /config/mediawiki/LocalSettings.php
 /backup
+/private
 docker-compose.override.yml
