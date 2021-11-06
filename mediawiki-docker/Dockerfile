@@ -1,4 +1,4 @@
-FROM mediawiki:1.36.1
+FROM mediawiki:1.36.2
 
 WORKDIR /var/www/html
 
