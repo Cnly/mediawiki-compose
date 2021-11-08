@@ -51,3 +51,5 @@ RUN cd extensions/Flow && composer update --no-dev
 
 RUN /simple-install-mw-extension.sh Linter
 RUN /simple-install-mw-extension.sh DiscussionTools
+
+RUN /simple-install-mw-extension.sh HeadScript
