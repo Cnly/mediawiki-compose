@@ -50,7 +50,3 @@ services:
       - mediawiki
     volumes:
       - ./config/cloudflared:/home/nonroot/.cloudflared
-  # parsoid:
-  #   image: thenets/parsoid:0.11
-  #   environment:
-  #     PARSOID_DOMAIN_parsoid: http://mediawiki/api.php
